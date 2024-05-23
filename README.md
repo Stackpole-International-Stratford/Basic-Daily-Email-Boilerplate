@@ -20,7 +20,7 @@ Fork this repo giving it a meaningful name
 
 Clone:
 
-`git clone https://github.com/Stackpole-International-Stratford/Basic-Daily-Email-Boilerplate.git`
+`git clone https://github.com/Stackpole-International-Stratford/<your forked repo>.git`
 
 or update with:
 
