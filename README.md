@@ -5,8 +5,11 @@ requires a .env file with the following variables:
 - DB_PASSWORD
 - DB_HOST
 - DB_PORT
+- EMAIL_SERVER
+- EMAIL_FROM
+- EMAIL_SUBJECT
+- EMAIL_LIST
 
-requires a distribution list in main.py
 
 requires a report function that returns the report body in HTML
 currently using Jinja2 templates.
@@ -17,7 +20,7 @@ Fork this repo giving it a meaningful name
 
 Clone:
 
-`git clone https://github.com/cstrutton/new_report.git`
+`git clone https://github.com/Stackpole-International-Stratford/Basic-Daily-Email-Boilerplate.git`
 
 or update with:
 
@@ -25,10 +28,10 @@ or update with:
 
 build with:
 
-`docker build -t new_report .`
+`docker compose build`
 
 run with:
 
-`docker run -d --restart always new_report` 
+`docker compose up` 
 
 
