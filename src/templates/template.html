@@ -38,29 +38,41 @@
 </head>
 <body>
 
-<h1>AB1V Autogauge Production vs Scrap</h1>
-<h3>{{ start }} to {{ end }}</h3>
+<h1>{{ report_title }}</h1>
+<h3>{{ report_period }}</h3>
 <table>
-    <tr>
-        <th>Part</th>
-        <th>Good</th>
-        <th>Rejects</th>
-    </tr>
-    {%- for part in data %}
-    <tr>
-        <td>{{ part['part_number'] }}</td>
-        <td>{{ part['good'] }}</td>
-        {%- if part['reject'] %}
-            {%- for key, value in part['reject'].items() %}
-                {%- if value['count'] > 0 %}
-                    <td>{{ value['label'] }}: {{ value['count'] }}</td>
-                {%- endif %}
-            {%- endfor %}
-        {%- else %}
-            <td>No rejects</td>
-        {%- endif %}
-    </tr>
-    {%- endfor %}
+    <thead>
+        <tr>
+            {# Dynamically create table headers based on the keys of the first data item #}
+            {% for key in data[0].keys() %}
+                <th>{{ key|capitalize }}</th>
+            {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+        {# Iterate through each item in the data list #}
+        {% for item in data %}
+            <tr>
+                {# Iterate through each key-value pair in the item #}
+                {% for key, value in item.items() %}
+                    <td>
+                        {# Check if value is a dictionary and handle differently if needed #}
+                        {% if value is mapping %}
+                            {# Iterate over sub-items if value is a dictionary #}
+                            {% for sub_key, sub_value in value.items() %}
+                                <strong>{{ sub_key|capitalize }}</strong>: {{ sub_value }}
+                                {# Add separator for multiple entries in a dictionary #}
+                                {% if not loop.last %}, {% endif %}
+                            {% endfor %}
+                        {% else %}
+                            {{ value }}
+                        {% endif %}
+                    </td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </tbody>
 </table>
+
 </body>
 </html>
