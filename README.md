@@ -1,14 +1,20 @@
 # Basic Daily Email Boilerplate
 
 requires a .env file with the following variables:
-- DB_USER
-- DB_PASSWORD
-- DB_HOST
-- DB_PORT
-- EMAIL_SERVER
-- EMAIL_FROM
-- EMAIL_SUBJECT
-- EMAIL_LIST
+# Database credentials
+DB_PASSWORD=
+DB_USER=
+DB_HOST=10.4.1.224
+DB_PORT=3306
+DB_NAME=prodrptdb
+
+# Email server details
+EMAIL_SERVER=smtp01.stackpole.ca
+EMAIL_FROM=tyler.careless@johnsonelectric.com
+EMAIL_SUBJECT=
+EMAIL_LIST=
+
+
 
 
 requires a report function that returns the report body in HTML

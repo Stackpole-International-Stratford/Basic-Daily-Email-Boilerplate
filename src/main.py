@@ -23,6 +23,7 @@ EMAIL_FROM = os.getenv('EMAIL_FROM')
 EMAIL_SUBJECT = os.getenv('EMAIL_SUBJECT')
 EMAIL_LIST = os.getenv('EMAIL_LIST')
 
+
 def get_prodmon_ping_entries():
     try:
         # Connect to the database
@@ -51,6 +52,8 @@ def get_prodmon_ping_entries():
         if connection.is_connected():
             cursor.close()
             connection.close()
+
+
 
 def human_readable_time_diff(past_timestamp):
     now = datetime.utcnow()
@@ -98,6 +101,11 @@ def render_template(entries):
             entry_with_time_diff = list(entry) + [human_readable_diff, time_diff_seconds]
             entries_with_time_diff.append(entry_with_time_diff)
 
+
+        # If no entries meet the criteria, return None
+        if not entries_with_time_diff:
+            return None
+        
         # Sort by time_diff_seconds in ascending order (longest time without update at the top)
         entries_with_time_diff.sort(key=lambda x: x[-1], reverse=True)
 
@@ -143,9 +151,10 @@ def main():
         if message:
             send_email(message)
         else:
-            print("No relevant entries found or failed to render email template.")
+            print("No relevant entries found within the last 15 minutes. Email not sent.")
     else:
         print("No entries found or failed to retrieve entries.")
+
 
 if __name__ == "__main__":
     main()

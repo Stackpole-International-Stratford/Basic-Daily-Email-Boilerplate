@@ -1,20 +1,29 @@
-FROM python:3.7
+# Use an official Python runtime as a parent image
+FROM python:3.9-slim
 
-RUN apt-get update && apt-get -y install cron nano
+# Install cron and any dependencies
+RUN apt-get update && apt-get install -y cron bash tzdata && rm -rf /var/lib/apt/lists/*
+
+# Set the working directory in the container
 WORKDIR /app
 
+# Set the timezone
 ENV TZ=America/Toronto
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-COPY requirements.txt requirements.txt
-RUN pip3 install -r requirements.txt
+# Install Python dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
-COPY crontab /etc/cron.d/crontab
-RUN chmod 0644 /etc/cron.d/crontab
-RUN /usr/bin/crontab /etc/cron.d/crontab
+# Copy crontab file to the cron.d directory
+COPY crontab /etc/cron.d/mycron
+RUN chmod 0644 /etc/cron.d/mycron
 
+# Apply the cron job
+RUN crontab /etc/cron.d/mycron
+
+# Copy the rest of the application code
 COPY . .
 
-RUN echo $PYTHONPATH
-# run crond as main process of container
+# Run cron in the foreground
 CMD ["cron", "-f"]
