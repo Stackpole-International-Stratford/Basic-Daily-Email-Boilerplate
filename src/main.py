@@ -126,23 +126,41 @@ def render_template(entries):
 
 def send_email(message):
     try:
+        print("Starting send_email function.")
+        
         # Create the email content
+        print("Creating MIME multipart email.")
         msg = MIMEMultipart()
-        msg['From'] = EMAIL_FROM
-        msg['To'] = EMAIL_LIST
-        msg['Subject'] = EMAIL_SUBJECT
+        msg['From'] = "tyler.careless@johnsonelectric.com"
+        msg['To'] = "tyler.careless@johnsonelectric.com"
+        msg['Subject'] = "Assets which have not pinged for over 15 minutes"
+
+        print("Email From: tyler.careless@johnsonelectric.com")
+        print("Email To: tyler.careless@johnsonelectric.com")
+        print("Email Subject: Assets which have not pinged for over 15 minutes")
 
         msg.attach(MIMEText(message, 'html'))
+        print("Attached HTML message to email.")
 
-        # Send the email
-        server = smtplib.SMTP(EMAIL_SERVER)
-        server.sendmail(EMAIL_FROM, EMAIL_LIST.split(','), msg.as_string())
+        # Hardcoded SMTP server address
+        server_address = "smtp01.stackpole.ca"
+        print(f"Connecting to SMTP server: {server_address}")
+        server = smtplib.SMTP(server_address)
+
+        print("Attempting to send the email.")
+        server.sendmail("tyler.careless@johnsonelectric.com", ["tyler.careless@johnsonelectric.com"], msg.as_string())
+        print("Email sent, closing the SMTP connection.")
+        
         server.quit()
+        print("SMTP connection closed.")
 
         print("Email sent successfully.")
 
     except Exception as e:
+        print("An error occurred during the send_email function.")
         print(f"Failed to send email: {e}")
+
+
 
 def main():
     entries = get_prodmon_ping_entries()
