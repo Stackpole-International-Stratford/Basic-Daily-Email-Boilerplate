@@ -1,7 +1,12 @@
+certifi==2024.8.30
+charset-normalizer==3.3.2
 click==8.1.7
+idna==3.10
+Jinja2==3.1.4
+loguru==0.7.2
 MarkupSafe==2.1.5
+mysql-connector-python==8.4.0
+python-dotenv==1.0.1
+requests==2.32.3
 svgwrite==1.4.3
-mysql-connector-python~=8.0.27
-Jinja2~=3.0.2
-python-dotenv~=0.19.1
-loguru~=0.5.3
+urllib3==2.2.3
