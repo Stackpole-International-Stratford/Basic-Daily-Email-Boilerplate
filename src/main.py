@@ -1,7 +1,7 @@
 import requests
 
 def send_curl_request():
-    url = 'http://10.4.1.232:8083/barcode/api/parts-scanned-last-24-hours/'
+    url = 'http://10.4.1.234/barcode/api/parts-scanned-last-24-hours/'
 
     try:
         # Send GET request
